@@ -20,8 +20,8 @@ SpaceShip::~SpaceShip()
 
 void SpaceShip::draw()
 {
-	TextureManager::Instance()->draw("spaceship", getTransform()->position.x, getTransform()->position.y,
-		0, 255, true);
+	TextureManager::Instance()->draw("spaceship", 
+		getTransform()->position.x, getTransform()->position.y, 0, 255, true);
 }
 
 void SpaceShip::update()
