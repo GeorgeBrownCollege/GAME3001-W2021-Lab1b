@@ -61,13 +61,16 @@ void PlayScene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
+	
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = glm::vec2(400.0f, 300.0f);
 	addChild(m_pTarget);
-	
+
+	// instantiating spaceship
 	m_pSpaceShip = new SpaceShip();
 	m_pSpaceShip->getTransform()->position = glm::vec2(100.0f, 100.0f);
 	m_pSpaceShip->setEnabled(false);
+	m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
 	addChild(m_pSpaceShip);
 }
 
@@ -100,6 +103,7 @@ void PlayScene::GUI_Function() const
 	if(ImGui::SliderFloat2("Target", float2, 0.0f, 800.0f))
 	{
 		m_pTarget->getTransform()->position = glm::vec2(float2[0], float2[1]);
+		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
 	}
 
 	ImGui::End();

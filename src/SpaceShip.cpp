@@ -1,5 +1,7 @@
 #include "SpaceShip.h"
 
+#include "Util.h"
+
 SpaceShip::SpaceShip()
 {
 	TextureManager::Instance()->load("../Assets/textures/spaceship.png", "spaceship");
@@ -13,6 +15,7 @@ SpaceShip::SpaceShip()
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->isColliding = false;
 	setType(SPACE_SHIP);
+	setMaxSpeed(10.0f);
 }
 
 SpaceShip::~SpaceShip()
@@ -26,8 +29,32 @@ void SpaceShip::draw()
 
 void SpaceShip::update()
 {
+	m_Move();
 }
 
 void SpaceShip::clean()
 {
+}
+
+void SpaceShip::setDestination(const glm::vec2 destination)
+{
+	m_destination = destination;
+}
+
+void SpaceShip::setMaxSpeed(const float speed)
+{
+	m_maxSpeed = speed;
+}
+
+void SpaceShip::m_Move()
+{
+	// direction with magnitude
+	m_targetDirection = m_destination - getTransform()->position;
+	
+	// normalized direction
+	m_targetDirection = Util::normalize(m_targetDirection);
+
+	getRigidBody()->velocity = m_targetDirection * m_maxSpeed;
+
+	getTransform()->position += getRigidBody()->velocity;
 }
